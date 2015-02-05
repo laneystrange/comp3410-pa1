@@ -17,21 +17,34 @@
 	.data
 
 fibs:	.word   0 : 9         # create an array variable named "fibs" of 9 word-length elements (4 bytes each)
-size:	.word  9              # create a single integer variable named "size" that indicates the length of the array
+#	size:	.word             # create a single integer variable named "size" that indicates the length of the array
+prompt: .asciiz "Enter the size of the array to print: "
 
 ###############################################
 # .text segment. Assembly instructions go here.
 ###############################################
 	.text
-	      la   $s0, fibs        # load address of array into $s0
-	      la   $s5, size        # load address of size variable into $s5
-	      lw   $s5, 0($s5)      # load array size from its address in the register
+	      la	$s0, fibs        	# load address of array into $s0
+	      
+input:      li 	$v0, 4		# prep the system to print string
+		la	$a0, prompt		# load the input prompt into memory
+	      syscall			# print the prompt
+	      
+	      li	$v0, 5		# prep the system to read variable
+	      syscall
+	      
+	      add	$s5, $s5, $v0	# move the entered variable into a register
+	      bltz 	$s5, input		# branch to input if 0 or a negative is entered
+	      bgt	$s5, 9, input	# branch to input if the input is greater than 9, the specified max size
+	      
+#     	la   	$s5, size       	# load address of size variable into $s5	##these lines are no longer needed, since we prompt for size
+#	      lw   	$s5, 0($s5)     	# load array size from its address in the register
 
 	      li   $s2, 1           # Initialize the Fibonacci numbers with value 1, stored in $s2
 	      sw   $s2, 0($s0)      # Set fibs[0] to 1
 	      sw   $s2, 4($s0)      # Set fibs[1] to 1
 	      addi $s1, $s5, -2     # Counter for loop, will execute (size-2) times
-
+	      
 	      # Loop to compute each Fibonacci number using the previous two Fib. numbers.
 	      # On line 37, "loop" is a label
 loop:	 lw   $s3, 0($s0)      # Get value from array fibs[i-2]
