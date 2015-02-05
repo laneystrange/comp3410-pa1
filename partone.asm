@@ -34,6 +34,7 @@ input:      li 	$v0, 4		# prep the system to print string
 	      syscall
 	      
 	      add	$s5, $s5, $v0	# move the entered variable into a register
+	      bltz 	$s5, input		# branch to input if 0 or a negative is entered
 	      bgt	$s5, 9, input	# branch to input if the input is greater than 9, the specified max size
 	      
 #     	la   	$s5, size       	# load address of size variable into $s5	##these lines are no longer needed, since we prompt for size

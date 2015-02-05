@@ -1,6 +1,7 @@
 .data
 
 runsum:	.word	0
+sumstring:	.asciiz "Sum: "
 
 .text
 
@@ -14,7 +15,10 @@ loop:	lw 	$s2, 0($s7)		# loading the current running total into register
 	addi	$s1, $s1, 2		# moves the current odd number up to the next odd
 	ble	$s1, $s0, loop	# branch to keep going if you haven't gotten to 15 yet
 	
-last:	lw	$a0, 0($s7)
+last:	la	$a0, sumstring
+	li	$v0, 4
+	syscall
+	lw	$a0, 0($s7)
 	li	$v0, 1
 	syscall
 	
