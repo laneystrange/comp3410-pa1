@@ -15,13 +15,14 @@
 
 	.data
 	
-intro: .asciiz "\Hi! I'm Warner.\nThis program is going to take two numbers from you, perform three magic calculations and print the results to the console. Have fun!\n"
+intro: .asciiz "\Hi! I'm Warner.\nThis program is going to take two numbers from you, perform three magic calculations and print the results to the console.\n"
 first: .asciiz "\Please enter your first number: "
 second: .asciiz "\Please enter your second number: "
 sum: .asciiz "\The sum of your two numbers is: "
 difference: .asciiz "\The difference between your two numbers is: "
 product: .asciiz "\The product of your two numbers is: "
 linebreak: .asciiz "\n"
+outro: .asciiz "buhbye"
 
 ###############################################
 # .text segment. Assembly instructions go here.
@@ -81,6 +82,10 @@ linebreak: .asciiz "\n"
 	      mov.d $f12, $f10
 	      li   $v0, 3
 	      syscall
+	      
+	      la   $a0, outro      # load address of outro into first argument register
+	      li   $v0, 4          # load print string call into first value register
+	      syscall		   # make system call that prints string prompt
 	      
 	      li $v0, 10 #loads op code into $v0 to exit program
 	      syscall #reads $v0 and exits program
