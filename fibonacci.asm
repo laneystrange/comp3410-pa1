@@ -1,7 +1,6 @@
 # COMP3410 Program Template
-# Author: Your Name
-# Assignment: PA[X]
-# Date: Date of submission
+# Author: Kevin Fisher
+# Assignment: PA1
 
 # Turn in one .asm file per assignment component
 # Remember to submit it as a pull request to the GitHub repo for the assignment
@@ -17,15 +16,25 @@
 	.data
 
 fibs:	.word   0 : 9         # create an array variable named "fibs" of 9 word-length elements (4 bytes each)
-size:	.word  9              # create a single integer variable named "size" that indicates the length of the array
+prompttext:	.asciiz "How many fibonacci numbers would you like to see?\n"
+errortext:	.asciiz "Error- please only enter an amount from 1 to 9!\n"
 
 ###############################################
 # .text segment. Assembly instructions go here.
 ###############################################
 	.text
+begin:	      li   $v0, 4	    # syscall 4 = print string
+	      la   $a0, prompttext  # store address of prompt string into a0
+	      syscall		    # do the diddly
+	      li   $v0, 5	    # syscall 5 = read int
+	      syscall		    # v0 will hold result
+	      # check if user input is allowed..
+	      subi $s0, $v0, 10     # subtract input from 10 and store in s0
+	      bgez $s0, invalidsize # if s0 >= 0, then it is not a valid size..
+	      blez $v0, invalidsize # if the input is 0 or less, it is not valid.
+	      
 	      la   $s0, fibs        # load address of array into $s0
-	      la   $s5, size        # load address of size variable into $s5
-	      lw   $s5, 0($s5)      # load array size from its address in the register
+	      add $s5, $zero, $v0   # load desired amount into $s5
 
 	      li   $s2, 1           # Initialize the Fibonacci numbers with value 1, stored in $s2
 	      sw   $s2, 0($s0)      # Set fibs[0] to 1
@@ -84,5 +93,11 @@ out:	  lw   $a0, 0($t0)      # load the integer to be printed (the current Fib. 
 	      bgtz $t1, out         # repeat while not finished
 
 	      jr   $ra              # return from subroutine
+	    	
+invalidsize:	
+	      li   $v0, 4	    # syscall 4 = print string
+	      la   $a0, errortext  # store address of error string into a0
+	      syscall		    # do the diddly
+	      j begin
 	# End of subroutine to print the numbers on one line
 	###############################################################
