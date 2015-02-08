@@ -15,13 +15,14 @@
 	.data
 
 introductiontext: .asciiz "Hello, and welcome to Kevin Fisher's fancycalc. Give me two inputs and I'll preform some mad arithmetic on them.\n"
-requesttext: .asciiz "Please input a number:\n"
+requesttext: .asciiz "Please input two numbers:\n"
 resultAText: .asciiz "The result of adding these is:\n"
 resultBText: .asciiz "The result of subtracting these is:\n"
 resultCText: .asciiz "The result of multiplying these is:\n"
-resultA: .word
-resultB: .word
-resultC: .word
+goodbyeText: .asciiz "Have a nice day!"
+resultA: .word 0
+resultB: .word 0
+resultC: .word 0
 
 ###############################################
 # .text segment. Assembly instructions go here.
@@ -76,6 +77,10 @@ results:      li $v0, 4			# syscall 4 = print string
 	      syscall
 	      li $v0, 11		# print char
 	      li $a0, 10		# line break
+	      syscall
+	      
+	      li $v0, 4		 	# print str
+	      la $a0, goodbyeText	# arg = goodbye text
 	      syscall
 	      
 	      
