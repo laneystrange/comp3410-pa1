@@ -18,19 +18,34 @@
 
 fibs:	.word   0 : 9         # create an array variable named "fibs" of 9 word-length elements (4 bytes each)
 size:	.word  9              # create a single integer variable named "size" that indicates the length of the array
+query:	.asciiz "How many fibonacci numbers do you want to calculate (select up to between 2 and 9):\n"
 
 ###############################################
 # .text segment. Assembly instructions go here.
 ###############################################
 	.text
-	      la   $s0, fibs        # load address of array into $s0
+	
+userInput:    la  $a0, query
+	      li  $v0, 4
+	      syscall
+	      
+	      li $v0,5
+	      syscall
+	      la $s6, ($v0)
+	      
+	
+	
+fibsSetup:    la   $s0, fibs        # load address of array into $s0
 	      la   $s5, size        # load address of size variable into $s5
 	      lw   $s5, 0($s5)      # load array size from its address in the register
-
+		
 	      li   $s2, 1           # Initialize the Fibonacci numbers with value 1, stored in $s2
 	      sw   $s2, 0($s0)      # Set fibs[0] to 1
 	      sw   $s2, 4($s0)      # Set fibs[1] to 1
-	      addi $s1, $s5, -2     # Counter for loop, will execute (size-2) times
+	      addi $s1, $s6, -2     # Counter for loop, will execute (size-2) times
+	      
+
+		     
 
 	      # Loop to compute each Fibonacci number using the previous two Fib. numbers.
 	      # On line 37, "loop" is a label
@@ -44,7 +59,7 @@ loop:	 lw   $s3, 0($s0)      # Get value from array fibs[i-2]
 
 	      # Now the Fibonacci numbers are computed and stored in array. Print them.
 	      la   $a0, fibs        # first argument for print (array)
-	      add  $a1, $zero, $s5  # second argument for print (size)
+	      add  $a1, $zero, $s6  # second argument for print (size)
 	      jal  print            # call print routine (note the 'print' label on line 68)
 
 	      # The program is finished. Exit.
