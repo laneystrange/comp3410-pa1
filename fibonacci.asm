@@ -18,6 +18,10 @@
 
 fibs:	.word   0 : 9         # create an array variable named "fibs" of 9 word-length elements (4 bytes each)
 size:	.word  9              # create a single integer variable named "size" that indicates the length of the array
+instr:	.asciiz		"How many numbers of the fibonacci sequence do you want"	#String to ask the user the qeustion of how many 
+											#how many number he would like to print
+											
+usernum: .word 0		#the number items to print out. By ddefault zero and will change once user inputs data
 
 ###############################################
 # .text segment. Assembly instructions go here.
@@ -92,4 +96,12 @@ out:	  lw   $a0, 0($t0)      # load the integer to be printed (the current Fib. 
 # Another .text segment, fro asking for user input
 ###########################################################
 
-	input:	
+	input:	li $v0, 4	#prep system call for printing string
+		li $a0, instr	#pass the argument to the string
+		syscall 
+		
+		li $v0, 10 # prep for exit
+		syscall
+		
+		
+		
