@@ -56,7 +56,7 @@ addInts: 	add $t2, $t0, $t1	# Add values stored in $t0 and $t1 and store the res
 		li $v0, 1		# Setup for printing the sum of the two integers
 		syscall			# Syscall to print the sum of the two integers
 		
-		jr $ra			# Returns to the calling address i.e. jal subInts
+		jr $ra			# Returns to jal subInts
 		
 subInts: 	sub $t2, $t0, $t1	# Subtract the values store in $t0 and $t1 and store the result in $t2
 		la $a0, sub2		# Load address of sub2 message into $a0
