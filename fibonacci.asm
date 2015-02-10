@@ -19,14 +19,33 @@
 fibs:	.word   0 : 9         # create an array variable named "fibs" of 9 word-length elements (4 bytes each)
 size:	.word  9              # create a single integer variable named "size" that indicates the length of the array
 
+promptText:	 .asciiz "How many fibonacci numbers are desired? (1-9)\n"
+errorText:	.asciiz "Input number is too high or too low!\n"
+
 ###############################################
 # .text segment. Assembly instructions go here.
 ###############################################
 	.text
 	      la   $s0, fibs        # load address of array into $s0
-	      la   $s5, size        # load address of size variable into $s5
-	      lw   $s5, 0($s5)      # load array size from its address in the register
-
+	      
+	      prompt: 	la   $a0, promptText    # giving the user the original prompt
+	      		li   $v0, 4           	# specifying that a string is being printed
+	      		syscall               	# do what was specified
+	      
+	      		li   $v0, 5
+	      		syscall
+	      
+	      		ble $v0, $zero, error 	# if less than 1, error
+	      		bgt  $v0, 9, error	# if greater than 9, error
+	      		move $s5, $v0		# no issues? move our value to s5 and jump to done
+	      		j done
+	      		
+	      error:	la   $a0, errorText     # giving the user the error message
+	      		li   $v0, 4           	# specifying that a string is being printed
+	      		syscall    	     	# print that message
+	      		j prompt		# ask the user again
+	      
+	      done:
 	      li   $s2, 1           # Initialize the Fibonacci numbers with value 1, stored in $s2
 	      sw   $s2, 0($s0)      # Set fibs[0] to 1
 	      sw   $s2, 4($s0)      # Set fibs[1] to 1
