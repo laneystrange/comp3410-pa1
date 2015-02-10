@@ -86,3 +86,10 @@ out:	  lw   $a0, 0($t0)      # load the integer to be printed (the current Fib. 
 	      jr   $ra              # return from subroutine
 	# End of subroutine to print the numbers on one line
 	###############################################################
+	
+	
+###########################################################
+# Another .text segment, fro asking for user input
+###########################################################
+
+	input:	
