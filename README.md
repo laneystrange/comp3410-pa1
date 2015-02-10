@@ -1,80 +1,77 @@
-COMP3410 Spring2015
-Programming Assignment #1
-Assigned: 4 February, 2015
-Deadline: 11 February, 2015
+COMP3410 PA1
+
+Problem One: Fibonacci 
+
+	Input: Integer from user between 1 - 9 inclusive
+	Output: Fibonacci numbers
+
+	Output: 
+		Enter the value for the Fibonacci Sequence: 0
+		Enter the value for the Fibonacci Sequence: 10
+		Enter the value for the Fibonacci Sequence: 9
+		The Fibonacci number are: 
+		1 1 2 3 5 8 21 34
+		-- program is finished running--
+
+	Summary:
+		This program now accepts user input for the size of the fibonacci
+		sequence. I changed the variable size to print out a message. Next 
+		was setting up the program to take user input. After user input the value
+		is then tested to make sure it's between 1 - 9 inclusive. If all checks 
+		pass then the input is moved from $v0 into $s5.
+		
+		The problem that I had was verifying the user input to make sure it was
+		between 1 - 9 inclusive. After class on 2/9/15 that problem was now 
+		trival.
 
 
-GITHUB SUBMISSION GUIDELINES
-1. Fork the assignment repository.
-2. Update your work in your own branch regularly.
-3. Create one .asm file for each part below (except part zero)
-4. When you're ready to turn it in (i.e., your code is perfect and tested), submit a pull request to the original branch.
-5. In your README file, provide a description of all the ways you've tested your code and the output that you saw. For example, for Part Two, you should include a summary of what you saw on the screen when you ran your program, something like this:
+Problem Two: Introduction including the sum, difference, and product of two ints
 
-   Hello! This is PA#1 for COMP3410 and I am Elena Strange.
-   Enter an integer: 4
-   Enter another integer: 8
-   Sum: 12
-   Difference: -4
-   Product: 32
-   Thanks for playing! Goodbye.
+	Input: Two integers
+	Output: Introduction and the sum, difference, and product of two ints
+
+	Output:
+		Welcome, I am Robert Edstrom and this is PA1 part-two.
+		Input: two integers, Output: sum, difference, & product
+		Pick an integer: 5
+		Pick an integer: 9
+		Sum: 14
+		Difference: -4
+		Product: 45
+		-- Program is finished running --
+
+		Summary:
+			This program will print out an introduction and prompt the user to 
+			enter two integers. Once the user has choosen the two integers the
+			program will print the sum, difference, and product of the two 
+			integers. 
+
+			When I first hacked this out the sum and product were working 
+			correctly. The difference was printing a value that is not possible
+			through the subtraction of two integers. The problem was fixed when 
+			I tinkered with the registers on line 61.
+			
 
 
-PART ZERO. (0 points).
+Problem Three: Sum of the odd integers 1 - 15 inclusive
+	
+	Input: None
+	Output: The sum of the odd integers 1 - 15 inclusive
 
-Download and install MARS: http://courses.missouristate.edu/KenVollmar/MARS/download.htm
+	Output: 
+		The sum of the odd integers 1 - 15 inclusive is: 64
 
-We'll go over many of the MIPS instructions in class, but our textbook
-is a good resource when you need help with syntax or getting access to
-all the instrutions possible. Appendix A has a lot of information, and
-there is a MIPS cheat-sheet in green paper in the very front.
+	Summary: 
+		Problem three will output the sum of the values between 1 - 15 inclusive.
 
-Another MIPS resource: 
-http://www2.engr.arizona.edu/~ece369/Resources/spim/MIPSReference.pdf
-
-
-=========================================================
-
-PART ONE. 30 points.
-
-First, we'll get familiar with MARS and Assembly by working with an
-existing source code file. Retrieve the fibonacci.asm file from the
-GitHub repo.
-
-1. Load it into MARS and run the program. 
-
-2. Modify fibonacci.asm so that, instead of always printing 9
-Fibonacci numbers, it prompts the user how many numbers to print. (You
-can do this by keeping the array the same size, and limiting the user
-to input sizes only up to 9.)
-
-=======================================================
-
-PART TWO. 40 points.
-
-Write a MIPS Assembly program that performs the following tasks, in order:
-
-1. Print an introduction that includes: your name, a title, and a brief description of the program.
-
-2. Prompt the user for two numbers and save them in two different registers.
-
-3. Perform 3 calculations (sum, difference, product) using these two numbers, and save each result in data memory.
-
-4. For each computed result, retrieve it from memory and print it to the terminal.
-
-5. Print a concluding message and exit.
-
-======================================================
-
-PART THREE. 30 points.
-
-Write a MIPS Assembly program that performs the following task:
-
-Calculate the sum of the odd integers between 1 and 15, inclusive.
-(You may use a MIPS version of a while-loop to complete this task.)
-
-Store each partial sum in memory as you go. I.e., store 1+3=5 in memory. Then store that result plus the next odd number (5+5=10, then 10+7=17), and so on.
-
-Load the final result into a register and print the result to the terminal.
-
+		The problem I was having with this program was inside the loop. I was
+		able to implement the calculation of the next odd integer, but figuring
+		out what I needed to store and when was my problem. When I stored the 
+		next odd number in the array along with the sum of the first two odd
+		integers the output from the program was incorrect. The next step was 
+		to tinker with the registers to see if I could get the expected output. 
+		After coming back to this problem after a day or two I was able to figure
+		out how to manipulate the registers to get the expected output. But now 
+		the problem was to figure out how to break out of the loop. After class
+		on 2/9/15 this problem was trival. 
 
