@@ -115,13 +115,8 @@ out:	  lw   $a0, 0($t0)      # load the integer to be printed (the current Fib. 
 		li $v0, 5 #prep system call for user input
 		syscall #ask for user input
 		
+		bge $v0, $s5, input #if value is greater than the size of the array then ask for value again
 		move $t0, $v0 # moves register v0 to t0
 		
 		#return to sub routine
 		jr $ra
-		
-		
-		
-		
-		
-		
