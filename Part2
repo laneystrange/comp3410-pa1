@@ -1,0 +1,95 @@
+.data 
+
+addition: .word 0
+subtract: .word 0
+multiply: .word 0
+
+name: .asciiz "Matt Maddox \n"
+title: .asciiz "MIPS TWO \n"
+description: .asciiz "This program gets two integers from the user and calculates the sum, difference and product. Saves them to two different registers and prints to the terminal \n"
+
+enter1: .asciiz "Enter first number \n"
+enter2: .asciiz "Enter second number \n"
+line1: .asciiz "\n Addition = "
+line2: .asciiz "\n Subtraction = "
+line3: .asciiz "\n Multiply = "
+
+.text
+
+
+li $v0, 4
+la $a0, title	#Prints title to the screen"
+syscall
+
+li $v0, 4
+la $a0, description #Prints program description to the screen
+syscall	
+
+# ask for input1//correct
+li $v0, 4
+la $a0, enter1	#prints prompt to enter in first number
+syscall
+
+#get the first input //correct
+li $v0, 5 	#tells the register to get the user entered number
+syscall
+move $a1, $v0	#moves the value entered into $v0 to register $a1
+
+#ask for input2 //correct
+li $v0, 4
+la $a0,enter2	#tells the register to get the user entered 
+syscall
+
+#get second input // correct
+li $v0, 5
+syscall
+move $a2, $v0	#moves the value entered into $v0 to register $a2
+ 
+
+#add for sum
+li $v0, 1
+add $s1, $a1, $a2 	#puts the sum of both numbers into $s1 register
+sw $s1, addition 	#swaps the contents of $s1 register to the variable addition
+
+
+# subtract 
+sub $s2, $a1, $a2 	#puts the difference of both numbers into $s2 register
+sw $s2, subtract	# swaps the contents of $s1 register to the variable subtract
+
+# multiply
+
+mul $s3, $a1, $a2	#puts the multiplication of both numbers into $s3 register
+sw $s3, multiply	# swaps the contents of $s1 register to the variable multiply
+
+li $v0, 4
+la $a0, line1		#print and shows what is being added by using a string
+syscall
+
+li $v0 1
+la $a0, addition	#loads the addition into $a0 register
+lw  $a0, 0($a0)
+syscall
+
+li $v0, 4
+la $a0, line2		#print and shows what is being subtracted by using a string
+syscall
+
+li $v0 1
+la $a0, subtract 	#loads the subtraction into $a0 register
+lw  $a0, 0($a0)
+syscall
+
+li $v0, 4
+la $a0, line3		#print and shows what is being multiplied by using a string
+syscall
+
+li $v0 1
+la $a0, multiply	#loads the multiply into $a0 register
+lw  $a0, 0($a0)
+syscall
+
+
+
+
+
+
