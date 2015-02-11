@@ -48,6 +48,18 @@ Fibonacci numbers, it prompts the user how many numbers to print. (You
 can do this by keeping the array the same size, and limiting the user
 to input sizes only up to 9.)
 
+How big of an output do you want?
+500
+Please enter a number 1-9
+How big of an output do you want?
+0
+Please enter a number 1-9
+How big of an output do you want?
+3
+The Fibonacci numbers are:
+1 1 2 
+-- program is finished running --
+
 =======================================================
 
 PART TWO. 40 points.
@@ -63,6 +75,17 @@ Write a MIPS Assembly program that performs the following tasks, in order:
 4. For each computed result, retrieve it from memory and print it to the terminal.
 
 5. Print a concluding message and exit.
+Input two integers.
+100
+200
+
+Adding...........
+300
+Subtracting......
+-100
+Multiplying......
+20000
+Bye...............
 
 ======================================================
 
@@ -73,8 +96,8 @@ Write a MIPS Assembly program that performs the following task:
 Calculate the sum of the odd integers between 1 and 15, inclusive.
 (You may use a MIPS version of a while-loop to complete this task.)
 
-Store each partial sum in memory as you go. I.e., store 1+3=5 in memory. Then store that result plus the next odd number (5+5=10, then 10+7=17), and so on.
+Store each partial sum in memory as you go. I.e., store 1+3=4 in memory. Then store that result plus the next odd number (5+5=10, then 10+7=17), and so on.
 
 Load the final result into a register and print the result to the terminal.
 
-
+64
