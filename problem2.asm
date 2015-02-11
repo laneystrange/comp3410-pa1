@@ -26,3 +26,24 @@ description: .asciiz "This program allows you to see the name and title of the p
 ###############################################
 # .text segment. Assembly instructions go here.
 ###############################################
+
+	.text
+		#input ne
+		li $v0, 5 #prep system call for user input
+		syscall #ask for user input
+		
+		move $t0, $v0 # moves register v0 to t0
+		
+		
+		#input two
+		li $v0, 5 #prep system call for user input
+		syscall #ask for user input
+		
+		move $t1, $v0 # moves register v0 to t0
+		
+		
+		# The program is finished. Exit.
+	      	li   $v0, 10          # system call for exit
+	      	syscall               
+
+		
