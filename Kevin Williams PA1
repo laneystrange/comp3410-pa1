@@ -1,0 +1,365 @@
+# COMP3410 Program Template
+# Author: Kevin Williams
+# Assignment: PA[X]
+# Date: Date of submission
+
+# Turn in one .asm file per assignment component
+# Remember to submit it as a pull request to the GitHub repo for the assignment
+
+# fibonacci.asm
+# Input: None
+# Output: Print to terminal N Fibonacci numbers
+
+##########################################################
+# .data segment. Constant and variable definitions go here.
+##########################################################
+
+	.data
+	
+
+fibs:	.word   0 : 9         # create an array variable named "fibs" of 9 word-length elements (4 bytes each)
+size:	.word  9              # create a single integer variable named "size" that indicates the length of the array
+text:   .asciiz " Enter any number thats between 1-9."
+###############################################
+# .text segment. Assembly instructions go here.
+###############################################
+	.text
+	      la   $s0, fibs        # load address of array into $s0
+	      #la $s5, size         # load address of size variable into $s5
+	      #lw $s5, 0($s5)       # load array size from its address in the regisgter
+	      
+	      li $v0, 4             # 4 =print string
+	      la $a0, text          # load the address of text
+	      syscall               # do the printing
+	      
+	      li $v0, 5             # 5=read int
+	      syscall               # read the int, result stored in $v0
+	      move $s5, $v0
+	      
+
+	      li   $s2, 1           # Initialize the Fibonacci numbers with value 1, stored in $s2
+	      sw   $s2, 0($s0)      # Set fibs[0] to 1
+	      sw   $s2, 4($s0)      # Set fibs[1] to 1
+	      addi $s1, $s5, -2     # Counter for loop, will execute (size-2) times
+
+	      # Loop to compute each Fibonacci number using the previous two Fib. numbers.
+	      # On line 37, "loop" is a label
+loop:	 lw   $s3, 0($s0)      # Get value from array fibs[i-2]
+	      lw   $s4, 4($s0)      # Get value from array fibs[i-1]
+	      add  $s2, $s3, $s4    # fibs[i] = fibs[i-1] + fibs[i-2]
+	      sw   $s2, 8($s0)      # Store newly computed fibs[i] in array
+	      addi $s0, $s0, 4      # increment address for next fibonacci entry
+	      addi $s1, $s1, -1     # decrement loop counter
+	      bgtz $s1, loop        # repeat while not finished
+
+	      # Now the Fibonacci numbers are computed and stored in array. Print them.
+	      la   $a0, fibs        # first argument for print (array)
+	      add  $a1, $zero, $s5  # second argument for print (size)
+	      jal  print            # call print routine (note the 'print' label on line 68)
+
+	      # The program is finished. Exit.
+	      li   $v0, 10          # system call for exit
+	      syscall               
+
+	###############################################################
+	# Subroutine to print the numbers on one line. Another .data segment.
+	###########################################################
+	      .data
+	      
+space:	.asciiz  " "          				# Print a space between each pair of numbers
+head:	 .asciiz  "The Fibonacci numbers are:\n" 	# Print a little helpful intro
+
+###########################################################
+# Another .text segment, for printing
+###########################################################
+
+	      .text
+	      
+print:	add  $t0, $zero, $a0  # starting address of array of data to be printed
+	      add  $t1, $zero, $a1  # initialize loop counter to array size
+	      la   $a0, head        # load address of the print heading string
+	      li   $v0, 4           # specify that you're printing a string
+	      syscall               # print the heading string
+
+out:	  lw   $a0, 0($t0)      # load the integer to be printed (the current Fib. number)
+	      li   $v0, 1           # specify that you're printing an integer
+	      syscall               # print fibonacci number
+
+	      la   $a0, space       # load address of spacer for syscall
+	      li   $v0, 4           # specify Print String service
+	      syscall               # print the spacer string
+
+	      addi $t0, $t0, 4      # increment address of data to be printed
+	      addi $t1, $t1, -1     # decrement loop counter
+	      bgtz $t1, out         # repeat while not finished
+
+	      jr   $ra              # return from subroutine
+	# End of subroutine to print the numbers on one line
+	###############################################################
+jump to next
+#Author:	Kevin Williams 
+ #Date:		2/11/2015
+
+ .data 
+ 
+ 
+ intro: 	.ascii  "Math in MIPS! by, Kevin Williams \n\n" 
+ 	.ascii 	"Enter two numbers and i'll show you the sum, " 
+ 	.asciiz	"difference, product, quotient, and remainder.\n\n" 
+  
+ #result labels 
+ resul1:	.word	0 
+ resul2:	.word	0 
+ resul3:	.word	0 
+ divhi:	.word	0 
+ divlo:	.word	0   
+ #string prompts 
+ promp1:	.asciiz	"First number: " 
+ promp2:	.asciiz	"Second number: " 
+ adding:	.asciiz " + " 
+ subtrk:	.asciiz " - " 
+ multi:	.asciiz " x " 
+ divide:	.asciiz " / " 
+ equals:	.asciiz " = " 
+ remain: .asciiz " R " 
+ bye:	.asciiz "Thanks for using this program, goodbye!" 
+ spaces:	.asciiz "\n" 
+  
+ #beginning of program 
+ .text 
+  
+ 	li	$v0, 4		#print sys call 
+ 	la	$a0, intro	#load text argument 
+ 	syscall 
+ 	 
+ 	li	$a1, 256	#total bytes to read from buffer	 
+  
+ 	la	$a0, promp1	#print first prompt 
+ 	syscall 
+ 	 
+ 	#store readline inteter into num1 
+ 	li	$v0, 5		 
+ 	syscall 
+ 	move	$t1, $v0 
+ 	 
+ 	#print second prompt 
+ 	li	$v0, 4		 
+ 	la	$a0, promp2	 
+ 	syscall 
+ 	 
+ 	#store readline integer into num2 
+ 	li	$v0, 5 
+ 	syscall 
+ 	move	$t2, $v0 
+ 	 
+ 	#printing spaces 
+ 	li	$v0, 4		 
+ 	la	$a0, spaces	 
+ 	syscall 
+ 	 
+ 	#addition portion of program 
+ 	add 	$t0, $t1, $t2	#performs addition 
+ 	sw	$t0, resul1 
+ 	 
+ 	li	$v0, 1		#prints the first num 
+ 	la	$a0, ($t1) 
+ 	syscall	 
+ 	 
+ 	li	$v0, 4		#prints "plus" sign 
+ 	la	$a0, adding	 
+ 	syscall 
+ 	 
+ 	li	$v0, 1		#prints second number 
+ 	la	$a0, ($t2) 
+ 	syscall	 
+ 	 
+ 	li	$v0, 4		#prints "equals" sign 
+ 	la	$a0, equals	 
+ 	syscall 
+ 	 
+ 	li	$v0, 1		#prints result number 
+ 	lw	$a0, resul1 
+ 	syscall	 
+ 	 
+ 	#printing spaces 
+ 	li	$v0, 4		 
+ 	la	$a0, spaces	 
+ 	syscall 
+ 	 
+ 	#subtraction portion of program 
+ 	sub 	$t0, $t1, $t2	#performs subtraction 
+ 	sw	$t0, resul2 
+ 	 
+ 	li	$v0, 1		#prints the first num 
+ 	la	$a0, ($t1) 
+ 	syscall	 
+ 	 
+ 	li	$v0, 4		#prints "minus" sign 
+ 	la	$a0, subtrk	 
+ 	syscall 
+ 	 
+ 	li	$v0, 1		#prints second number 
+ 	la	$a0, ($t2) 
+ 	syscall	 
+ 	 
+ 	li	$v0, 4		#prints "equals" sign 
+ 	la	$a0, equals	 
+	syscall 
+ 	 
+ 	li	$v0, 1		#prints result number 
+ 	lw	$a0, resul2 
+ 	syscall	 
+ 	 
+ 	#printing spaces 
+ 	li	$v0, 4		 
+ 	la	$a0, spaces	 
+ 	syscall 
+ 	 
+ 	#multiplication portion of program 
+ 	mult 	$t1, $t2	#performs multiplication 
+ 	mflo	$t0 
+ 	sw	$t0, resul3 
+ 	 
+ 	li	$v0, 1		#prints the first num 
+ 	la	$a0, ($t1) 
+ 	syscall	 
+ 	 
+ 	li	$v0, 4		#prints "multiplication" sign 
+ 	la	$a0, multi	 
+ 	syscall 
+ 	 
+ 	li	$v0, 1		#prints second number 
+ 	la	$a0, ($t2) 
+ 	syscall	 
+ 	 
+ 	li	$v0, 4		#prints "equals" sign 
+ 	la	$a0, equals	 
+ 	syscall 
+ 	 
+ 	li	$v0, 1		#prints result number 
+ 	lw	$a0, resul3 
+ 	syscall	 
+ 	 
+ 	#printing spaces 
+ 	li	$v0, 4		 
+ 	la	$a0, spaces	 
+ 	syscall 
+ 	 
+ 	#division portion of program 
+ 	div 	$t1, $t2	#performs division 
+ 	mflo	$t0 
+ 	mfhi	$t3 
+ 	sw	$t0, divlo 
+ 	sw	$t3, divhi 
+ 	 
+ 	li	$v0, 1		#prints the first num 
+ 	la	$a0, ($t1) 
+ 	syscall	 
+ 	 
+ 	li	$v0, 4		#prints "division" sign 
+ 	la	$a0, divide	 
+ 	syscall 
+ 	 
+ 	li	$v0, 1		#prints second number 
+ 	la	$a0, ($t2) 
+ 	syscall	 
+ 	 
+ 	li	$v0, 4		#prints "equals" sign 
+ 	la	$a0, equals	 
+ 	syscall 
+ 	 
+ 	li	$v0, 1		#prints quotient result number 
+ 	lw	$a0, divlo 
+ 	syscall	 
+ 	 
+ 	li	$v0, 4		#prints "remainder" sign 
+ 	la	$a0, remain	 
+ 	syscall 
+ 	 
+ 	li	$v0, 1		#prints remainder result number 
+ 	lw	$a0, divhi 
+ 	syscall 
+ 	 
+ 	#printing spaces 
+ 	li	$v0, 4		 
+ 	la	$a0, spaces	 
+ 	syscall 
+ 	la	$a0, spaces	 
+ 	syscall 
+ 	 
+ 	#program exit 
+ 	li	$v0, 4		#prints "goodbye message" sign 
+ 	la	$a0, bye 
+ 	syscall 
+  
+ 	li 	$v0, 10		#program exit syscall 
+ 	syscall 
+next file
+#Author : Kevin Williams
+#Data:  02/11/2015
+.data 
+   
+
+  
+.text
+.globl main
+main:
+    addi $t1, $0, 1 
+    addi $t2, $0, 3
+
+loop:
+        bge     $t2, 11, Exit   # check to see if $t3 >= 11 if so exit
+        add    $t1, $t1 $t2,  # add $t2 to $t1    (1+3),....3+5 ect
+        addi $t2, $t2, 2   # change $t2 to next odd number by adding 2
+
+    j loop  #jump back to the start of the loop
+Exit:
+        li $v0, 1   # system call code to print an int
+      	move   $a0, $t1 # address of int to print
+        syscall     # print the int
+    jr $ra  #exit
+    read me file
+    COMP3410 Spring2015
+Programming Assignment #1
+
+
+
+PART ZERO. (0 points).
+
+Download and install MARS: http://courses.missouristate.edu/KenVollmar/MARS/download.htm
+
+We'll go over many of the MIPS instructions in class, but our textbook
+is a good resource when you need help with syntax or getting access to
+all the instrutions possible. Appendix A has a lot of information, and
+there is a MIPS cheat-sheet in green paper in the very front.
+
+Another MIPS resource: 
+http://www2.engr.arizona.edu/~ece369/Resources/spim/MIPSReference.pdf
+
+
+=========================================================
+
+PART ONE. 30 points.
+
+This is what printed out to the screen: "Enter any number thats betwwen 1-9. "5"
+"The Fibonacci numbers are: 1 1 2 3 5 --program is finished runing--
+=======================================================
+
+PART TWO. 40 points.
+
+This is what printed out to the screen: Math in MIPS! by, Kevin Williams
+Enter two numbers and i'll show you the sum, difference, product, quotient, and remainder.
+First number: 5
+Second number: 7
+
+5+ 7=12
+5-7=-2
+5 X 7=35
+5/7 =0 R 5
+Thanks for using this program. goodbye!
+--program is finished running--
+======================================================
+
+PART THREE. 30 points.
+
+It assembls successfully but when it run i get an error
