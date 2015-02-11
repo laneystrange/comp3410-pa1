@@ -1,0 +1,43 @@
+#Name: Dereje Arega
+# PA1
+# Date: 2/11/2015
+.data
+FV:.word 1 # the first value 
+SV:.word 1# the second value 
+Tn:.word
+space:.asciiz "\n" #creat a line break
+odlNum:.word
+.text
+li $k0,1 
+li $s1,8 # the number of old numbers from 1- 15 enclusive 
+loop: bge $k0,$s1,labl
+
+	la $t0,SV
+	lw $t0,0($t0)
+
+	
+	la $t1,FV
+	lw $t1,0($t1)
+	
+	addi $t2,$t1,2
+	 
+	add $s4,$t0,$t2
+	
+	sw $s4 SV
+	sw $t2,FV
+	
+	addi $k0,$k0,1
+	
+	la $a0,SV
+	lw $a0,0($a0)
+	li $v0,1
+	syscall
+	
+	la $a0,space
+	li $v0, 4
+	syscall
+	j loop
+labl:li $v0,10
+syscall
+	
+	
