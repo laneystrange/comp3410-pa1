@@ -1,13 +1,13 @@
-# COMP3410 Program Template
-# Author: Your Name
-# Assignment: PA[X]
-# Date: Date of submission
+# COMP3410 
+# Author: Miguel Betances
+# Assignment: PA[1]
+# Date: Feb/11/2015
 
 # Turn in one .asm file per assignment component
 # Remember to submit it as a pull request to the GitHub repo for the assignment
 
 # fibonacci.asm
-# Input: None
+# Input: N number between 2-9 (it could be more)
 # Output: Print to terminal N Fibonacci numbers
 
 ##########################################################
@@ -17,15 +17,24 @@
 	.data
 
 fibs:	.word   0 : 9         # create an array variable named "fibs" of 9 word-length elements (4 bytes each)
-size:	.word  9              # create a single integer variable named "size" that indicates the length of the array
+#size:	.word  9              # create a single integer variable named "size" that indicates the length of the array
+input: 	.asciiz	"\Enter the size of the array\n"
 
 ###############################################
 # .text segment. Assembly instructions go here.
 ###############################################
 	.text
+	      la   $a0, input	#load input from user to a0
+	      li   $v0, 4	#load call 4 to display text	
+	      syscall		#do
+	      
+	      li   $v0, 5	#load inmmediate call 5
+	      syscall		#do	
+	      
+	      move $s5, $v0	#move and replace the value in s5 (where array size will be store) with v0 (array size from input user)			
 	      la   $s0, fibs        # load address of array into $s0
-	      la   $s5, size        # load address of size variable into $s5
-	      lw   $s5, 0($s5)      # load array size from its address in the register
+	      #la   $s5, size        # load address of size variable into $s5
+	      #lw   $s5, 0($s5)      # load array size from its address in the register
 
 	      li   $s2, 1           # Initialize the Fibonacci numbers with value 1, stored in $s2
 	      sw   $s2, 0($s0)      # Set fibs[0] to 1
@@ -50,7 +59,9 @@ loop:	 lw   $s3, 0($s0)      # Get value from array fibs[i-2]
 	      # The program is finished. Exit.
 	      li   $v0, 10          # system call for exit
 	      syscall               
-
+	
+	
+	 
 	###############################################################
 	# Subroutine to print the numbers on one line. Another .data segment.
 	###########################################################
@@ -58,7 +69,8 @@ loop:	 lw   $s3, 0($s0)      # Get value from array fibs[i-2]
 	      
 space:	.asciiz  " "          				# Print a space between each pair of numbers
 head:	 .asciiz  "The Fibonacci numbers are:\n" 	# Print a little helpful intro
-
+buffer: .space 20
+str1:  .asciiz "Enter string(max 20 chars): "
 ###########################################################
 # Another .text segment, for printing
 ###########################################################
@@ -84,5 +96,7 @@ out:	  lw   $a0, 0($t0)      # load the integer to be printed (the current Fib. 
 	      bgtz $t1, out         # repeat while not finished
 
 	      jr   $ra              # return from subroutine
+	      
+		
 	# End of subroutine to print the numbers on one line
 	###############################################################
