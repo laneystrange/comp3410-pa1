@@ -1,13 +1,13 @@
 # COMP3410 Program Template
-# Author: Your Name
-# Assignment: PA[X]
-# Date: Date of submission
+# Author: Enyil Padilla
+# Assignment: PA[1]
+# Date: 2/11/2015
 
 # Turn in one .asm file per assignment component
 # Remember to submit it as a pull request to the GitHub repo for the assignment
 
 # fibonacci.asm
-# Input: None
+# Input: Integer from user, from 1 to 9, N.
 # Output: Print to terminal N Fibonacci numbers
 
 ##########################################################
@@ -17,16 +17,14 @@
 	.data
 
 fibs:	.word   0 : 9         # create an array variable named "fibs" of 9 word-length elements (4 bytes each)
-size:	.word  9              # create a single integer variable named "size" that indicates the length of the array
+msg: .asciiz "Please enter number of iterations (0-9): "
 
 ###############################################
 # .text segment. Assembly instructions go here.
 ###############################################
 	.text
+	      jal input
 	      la   $s0, fibs        # load address of array into $s0
-	      la   $s5, size        # load address of size variable into $s5
-	      lw   $s5, 0($s5)      # load array size from its address in the register
-
 	      li   $s2, 1           # Initialize the Fibonacci numbers with value 1, stored in $s2
 	      sw   $s2, 0($s0)      # Set fibs[0] to 1
 	      sw   $s2, 4($s0)      # Set fibs[1] to 1
@@ -46,10 +44,7 @@ loop:	 lw   $s3, 0($s0)      # Get value from array fibs[i-2]
 	      la   $a0, fibs        # first argument for print (array)
 	      add  $a1, $zero, $s5  # second argument for print (size)
 	      jal  print            # call print routine (note the 'print' label on line 68)
-
-	      # The program is finished. Exit.
-	      li   $v0, 10          # system call for exit
-	      syscall               
+	      j finish       	    #Finish program        
 
 	###############################################################
 	# Subroutine to print the numbers on one line. Another .data segment.
@@ -85,4 +80,22 @@ out:	  lw   $a0, 0($t0)      # load the integer to be printed (the current Fib. 
 
 	      jr   $ra              # return from subroutine
 	# End of subroutine to print the numbers on one line
+############################### TODO HOMEWORK CODE ###############################
+#Gets user input!
+input: 	
+	li $v0, 4                         #prepares print statement     
+	la $a0, msg                   #loads message into $a0     
+	syscall                           #shows message
+	li $v0, 5 #Prepares statement
+	syscall	#Performs syscall
+	bgt $v0, 9, input	#if input bigger than 9, loop
+	bltz $v0, input		#if input less than 0, loops again
+	beqz $v0, finish	#if input equal zero, finish program
+	move $s5, $v0		#moves integer to register s5
+	jr $ra			#Goes back to the main program
+#Finishes program
+finish:
+	li   $v0, 10          # system call for exit
+	syscall
+	
 	###############################################################
