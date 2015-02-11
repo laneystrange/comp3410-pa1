@@ -29,7 +29,7 @@ li $v0, 5		#time to read input
 syscall
 move $s0, $v0
 li $v0, 4
-la $a0, prompt2		#i just really like it, okay?
+la $a0, prompt2	#i just really like it, okay?
 syscall
 li $v0, 5		#read the other input
 syscall
@@ -38,8 +38,8 @@ add $s2, $s0, $s1	#add them
 sub $s3, $s0, $s1	#subtract them
 mul $s4, $s0, $s1	#multiply them
 li $v0, 4
-la $a0, sumtext		#flavor
-syscall			#printed
+la $a0, sumtext	#flavor
+syscall		#printed
 li $v0, 1
 move $a0, $s2		#sum
 syscall			#printed
@@ -48,21 +48,21 @@ la $a0, newline
 syscall
 li $v0, 4
 la $a0, difftext	#flavor
-syscall			#printed
+syscall		#printed
 li $v0, 1
 move $a0, $s3		#difference
-syscall			#printed
+syscall		#printed
 li $v0, 4
 la $a0, newline
 syscall
 li $v0, 4
 la $a0, prodtext	#flavor
-syscall			#printed
+syscall		#printed
 li $v0, 1
 move $a0, $s4		#product
-syscall			#printed
+syscall		#printed
 li $v0, 4
-la $a0, newline		#why did I add this?
+la $a0, newline	#Gotta get that trailing period
 syscall
 li $v0, 10		#exit
 syscall
