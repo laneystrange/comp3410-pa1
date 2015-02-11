@@ -1,0 +1,90 @@
+# COMP 3410
+# Author: Will Robb
+# Assignment: PA1-Part2
+# Date: 02/11/15
+
+.data
+nwline: .asciiz "\n"						# new line character
+myname: .asciiz "Hello. My name is Will Robb. This program is an awesome calculator. It will add, subtract, and multiply two numbers you enter. "	# my name, title, and discription
+prompt1: .asciiz "Please enter an int: "				# the first integer prompt
+prompt2: .asciiz "Please enter another int: "			# the second integer prompt
+sum:	.asciiz "The sum is: "					# description of the integer sum
+dif: .asciiz "The difference is: "				# description of the integer difference
+prd: .asciiz "The product is: "				# description of the integer product
+last: .asciiz "Thats it! Goodbye!"				# concluding message 
+
+.text
+main:
+	la $a0, myname				# load myname string into register
+	li $v0, 4				# load syscall for print string
+	syscall	
+
+	la $a0, nwline				# load nwline string into register
+	li $v0, 4				# load syscall for print string
+	syscall
+
+	la $a0, prompt1				# load prmpt1 string into register
+	li $v0, 4				# load syscall for print string
+	syscall
+
+	li $v0, 5				# load syscall for read integer
+	syscall
+	move $t0, $v0				# move the read integer into register
+
+	la $a0, prompt2				# load prmpt2 string into register
+	li $v0, 4				# load syscall for print string
+	syscall
+
+	li $v0, 5				# load syscall for read integer
+	syscall
+	move $t1, $v0				# move the read integer into register
+
+	add $t2, $t0, $t1			# add the two integers and store the sum into register
+
+	la $a0, sum				# load sumint string into register
+	li $v0, 4				# load syscall for print string
+	syscall
+
+	move $a0, $t2				# move the integer sum into register
+	li $v0, 1				# load syscall for print integer
+	syscall
+
+	sub $t2, $t0, $t1			# subtract the 2nd integer from 1st and store them into register
+
+	la $a0, nwline				# load nwline string into register
+	li $v0, 4				# load syscall for print string
+	syscall
+
+	la $a0, dif				# load difint string into register
+	li $v0, 4				# load syscall for print string
+	syscall
+
+	move $a0, $t2				# move the integer difference into register
+	li $v0, 1				# load syscall for print integer
+	syscall
+
+	mult $t0, $t1				# multiply the two integers
+	mflo $t2				# store the integer product into register
+
+	la $a0, nwline				# load nwline string into register
+	li $v0, 4				# load syscall for print string
+	syscall
+
+	la $a0, prd				# load prdint string into register
+	li $v0, 4				# load syscall for print string
+	syscall
+
+	move $a0, $t2				# move the integer difference into register
+	li $v0, 1				# load syscall for print integer
+	syscall
+
+	la $a0, nwline				# load nwline string into register
+	li $v0, 4				# load syscall for print string
+	syscall
+
+	la $a0, last				# load fnlmsg string into register
+	li $v0, 4				# load syscall for print string
+	syscall
+
+	li $v0, 10				# load syscall for exit
+	syscall
