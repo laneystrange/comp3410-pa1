@@ -1,7 +1,7 @@
 # COMP3410 Program Template
-# Author: Your Name
-# Assignment: PA[X]
-# Date: Date of submission
+# Author: Jay Murphy
+# Assignment: PA[1]
+# Date: D2/11/2015
 
 # Turn in one .asm file per assignment component
 # Remember to submit it as a pull request to the GitHub repo for the assignment
@@ -21,7 +21,10 @@ size:	.word  9              # create a single integer variable named "size" that
 instr:	.asciiz 	"How many numbers of the fibonacci sequence do you want"	#String to ask the user the qeustion of how many 
 											#how many number he would like to print
 											
-usernum: .word 0		#the number items to print out. By ddefault zero and will change once user inputs data
+usernum: .word	0		#the number items to print out. By ddefault zero and will change once user inputs data
+
+
+
 
 ###############################################
 # .text segment. Assembly instructions go here.
@@ -45,11 +48,17 @@ loop:	 lw   $s3, 0($s0)      # Get value from array fibs[i-2]
 	      addi $s0, $s0, 4      # increment address for next fibonacci entry
 	      addi $s1, $s1, -1     # decrement loop counter
 	      bgtz $s1, loop        # repeat while not finished
+	      
+	      #ask for the user input and store it
+	      jal input #jump to the input label to ask for input
+	      
 
 	      # Now the Fibonacci numbers are computed and stored in array. Print them.
 	      la   $a0, fibs        # first argument for print (array)
-	      add  $a1, $zero, $s5  # second argument for print (size)
+	      add  $a1, $zero, $t0  # second argument for print (size)
 	      jal  print            # call print routine (note the 'print' label on line 68)
+	      
+	      
 
 	      # The program is finished. Exit.
 	      li   $v0, 10          # system call for exit
@@ -62,6 +71,7 @@ loop:	 lw   $s3, 0($s0)      # Get value from array fibs[i-2]
 	      
 space:	.asciiz  " "          				# Print a space between each pair of numbers
 head:	 .asciiz  "The Fibonacci numbers are:\n" 	# Print a little helpful intro
+
 
 ###########################################################
 # Another .text segment, for printing
@@ -90,18 +100,23 @@ out:	  lw   $a0, 0($t0)      # load the integer to be printed (the current Fib. 
 	      jr   $ra              # return from subroutine
 	# End of subroutine to print the numbers on one line
 	###############################################################
-	
-	
-###########################################################
-# Another .text segment, fro asking for user input
-###########################################################
 
+###########################################################
+# Another .text segment, for asking for user input
+###########################################################
+	.text
+	#instructions for printing the string that ask users for number
 	input:	li $v0, 4	#prep system call for printing string
 		la $a0, instr	#pass the argument to the string
-		syscall 
+		syscall # print strin
 		
-		li $v0, 10 # prep for exit
-		syscall
+
 		
+		li $v0, 5 #prep system call for user input
+		syscall #ask for user input
 		
+		bge $v0, $s5, input #if value is greater than the size of the array then ask for value again
+		move $t0, $v0 # moves register v0 to t0
 		
+		#return to sub routine
+		jr $ra
