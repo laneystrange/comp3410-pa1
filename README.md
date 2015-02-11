@@ -77,4 +77,8 @@ Store each partial sum in memory as you go. I.e., store 1+3=5 in memory. Then st
 
 Load the final result into a register and print the result to the terminal.
 
+<<<<<<< HEAD
 
+=======
+Programming Assignment #1 for COMP3410, Spring 2015 at U of M
+>>>>>>> parent of 2b286fe... Placeholder update for README.
