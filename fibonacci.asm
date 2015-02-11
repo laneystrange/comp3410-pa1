@@ -1,13 +1,9 @@
-# COMP3410 Program Template
-# Author: Your Name
-# Assignment: PA[X]
-# Date: Date of submission
-
-# Turn in one .asm file per assignment component
-# Remember to submit it as a pull request to the GitHub repo for the assignment
+# Author: Denzel Young
+# Assignment: PA1
+# Date: 2/10/2015
 
 # fibonacci.asm
-# Input: None
+# Input: Number of Fibonacci numbers to print.
 # Output: Print to terminal N Fibonacci numbers
 
 ##########################################################
@@ -17,15 +13,25 @@
 	.data
 
 fibs:	.word   0 : 9         # create an array variable named "fibs" of 9 word-length elements (4 bytes each)
-size:	.word  9              # create a single integer variable named "size" that indicates the length of the array
+
+prompt: .asciiz "How many Fibonacci Numbers would you like to print (0-9)? \n "
 
 ###############################################
 # .text segment. Assembly instructions go here.
 ###############################################
 	.text
+	# This addition allows me to print a prompt for the user to enter a number
+	# between 0 and 9, then only show that many Fibonacci numbers.
+		li $v0, 4 
+		la $a0, prompt
+		syscall 
+	
+		li $v0, 5
+		syscall
+		move $s5, $v0
+	
+	
 	      la   $s0, fibs        # load address of array into $s0
-	      la   $s5, size        # load address of size variable into $s5
-	      lw   $s5, 0($s5)      # load array size from its address in the register
 
 	      li   $s2, 1           # Initialize the Fibonacci numbers with value 1, stored in $s2
 	      sw   $s2, 0($s0)      # Set fibs[0] to 1
@@ -58,14 +64,14 @@ loop:	 lw   $s3, 0($s0)      # Get value from array fibs[i-2]
 	      
 space:	.asciiz  " "          				# Print a space between each pair of numbers
 head:	 .asciiz  "The Fibonacci numbers are:\n" 	# Print a little helpful intro
-
 ###########################################################
 # Another .text segment, for printing
 ###########################################################
 
 	      .text
-	      
-print:	add  $t0, $zero, $a0  # starting address of array of data to be printed
+
+print:
+	add  $t0, $zero, $a0  # starting address of array of data to be printed
 	      add  $t1, $zero, $a1  # initialize loop counter to array size
 	      la   $a0, head        # load address of the print heading string
 	      li   $v0, 4           # specify that you're printing a string
