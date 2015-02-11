@@ -1,0 +1,73 @@
+.data
+
+text: .asciiz "\nNathaniel Warren III, Coding Assignment1-Part1\n"
+
+statement1: .asciiz "Please enter the first number please\n" #Print statement 1
+statement2: .asciiz "Please enter the second number please\n" #S2
+statement3:.asciiz "\nWe are done. Thank the Lord!\n" #S3
+statement4: .asciiz "\nadd answer:  "
+statement5: .asciiz "\nsub answer:  "
+statement6: .asciiz "\nmult answer:  "
+ 
+###############################################
+# .text segment. Assembly instructions go here.
+###############################################
+.text
+#the header
+li $v0,4
+la $a0, text
+syscall
+
+      # below simply posts first statement above to screen
+      li $v0,4
+      la $a0, statement1
+      syscall
+      
+      #below simply accepts user input in regards to first question
+      li $v0,5
+      syscall
+      
+      #we store the value entered in the register t0
+      move $t0, $v0
+      
+      #Doing the same operations as above 
+      li $v0,4
+      la $a0, statement2
+      syscall
+      
+      li $v0,5
+      syscall
+      move $t1, $v0
+      
+      
+      #Doing the adding of the 2 inputs
+      add $t2,$t0,$t1
+      li $v0,4
+      la $a0, statement4
+      syscall
+      li $v0,1
+      move $a0,$t2
+      syscall
+      
+      #doing the difference of the 2 inputs
+      sub $t2,$t1,$t0
+      li $v0,4
+      la $a0, statement5
+      syscall
+      li $v0,1
+      move $a0,$t2
+      syscall
+      
+      #multiplying the 2 inputs 
+      mul $t2,$t1,$t0
+      li $v0,4
+      la $a0, statement6
+      syscall
+      li $v0,1
+      move $a0,$t2
+      syscall
+      
+      #Final message printing to screen
+      li $v0,4
+      la $a0, statement3
+      syscall

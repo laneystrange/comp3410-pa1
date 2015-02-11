@@ -1,0 +1,34 @@
+.data
+#Data below is stored in memmory
+fixedV: .word 1
+currentV: .word 0
+newV:.word 1
+prompt1: .asciiz "\nAnswer\n" 
+.text
+
+loop: 
+
+lw $t0,fixedV # this value never changes. It is always 1
+lw $t1,currentV # this value starts out as 1 and changes as loop goes
+li $t2,2 # always 2, used to mutliply by 1 (the fixed value)
+mul $t3,$t0,$t2 # always 2
+add $t4,$t1,$t3 #adding current by 2
+sw $t4, currentV #storing the new value
+lw $t5,newV 
+move $t5,$t4 #simply storing currentValue  in newV to keep track of all values
+sw $t5,newV
+li $t6,64 #always loads 64 to do the bottom check
+j whilecon
+
+whilecon:
+blt $t5,$t6,loop
+j exit
+
+exit:
+#below we are printing the result to the screen.
+li $v0,4
+la $a0, prompt1
+syscall
+li $v0,1
+move $a0,$t5
+syscall
