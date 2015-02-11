@@ -1,7 +1,7 @@
 # COMP3410 Program Template
-# Author: Your Name
-# Assignment: PA[X]
-# Date: Date of submission
+# Author: Aaron Marshall
+# Assignment: PA[1]
+# Date: 2/10/14
 
 # Turn in one .asm file per assignment component
 # Remember to submit it as a pull request to the GitHub repo for the assignment
@@ -18,11 +18,23 @@
 
 fibs:	.word   0 : 9         # create an array variable named "fibs" of 9 word-length elements (4 bytes each)
 size:	.word  9              # create a single integer variable named "size" that indicates the length of the array
+input:  .asciiz "How big of an output do you want?\n"
+errort: .asciiz "Please enter a number 1-9\n"
 
 ###############################################
 # .text segment. Assembly instructions go here.
 ###############################################
 	.text
+      begin:  la $a0, input #load input
+	      li $v0, 4 #get ready to output text
+	      syscall
+	      
+	      li $v0, 5 #load user input
+	      syscall
+	      add $a1, $zero, $v0 #adds number input to address
+	      bgt $a1, 9, error #checks for invalid
+	      blt $a1, 1, error #checks for invalid
+	      
 	      la   $s0, fibs        # load address of array into $s0
 	      la   $s5, size        # load address of size variable into $s5
 	      lw   $s5, 0($s5)      # load array size from its address in the register
@@ -44,12 +56,20 @@ loop:	 lw   $s3, 0($s0)      # Get value from array fibs[i-2]
 
 	      # Now the Fibonacci numbers are computed and stored in array. Print them.
 	      la   $a0, fibs        # first argument for print (array)
-	      add  $a1, $zero, $s5  # second argument for print (size)
+	      #add  $a1, $zero, $s5  # second argument for print (size)
 	      jal  print            # call print routine (note the 'print' label on line 68)
 
 	      # The program is finished. Exit.
 	      li   $v0, 10          # system call for exit
-	      syscall               
+	      syscall  
+
+  error: la $a0, errort #gets read to output text
+	 li $v0, 4
+	 syscall
+	
+	 j begin # goes back the start
+
+                         
 
 	###############################################################
 	# Subroutine to print the numbers on one line. Another .data segment.
@@ -64,7 +84,7 @@ head:	 .asciiz  "The Fibonacci numbers are:\n" 	# Print a little helpful intro
 ###########################################################
 
 	      .text
-	      
+
 print:	add  $t0, $zero, $a0  # starting address of array of data to be printed
 	      add  $t1, $zero, $a1  # initialize loop counter to array size
 	      la   $a0, head        # load address of the print heading string
