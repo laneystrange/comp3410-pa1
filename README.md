@@ -1,3 +1,7 @@
+Evan Black
+Comp 3410
+Dr. Strange
+
 Part 1:
 
 How many fibonacci numbers are desired? (1-9)
@@ -16,6 +20,7 @@ The Fibonacci numbers are:
 Part 2:
 
 Hi! My name is Evan Black. This is part 2 of the 1st programming assignment for Comp 3410.
+
 Enter one number: 12
 Enter another number: 24
 Sum: 36
