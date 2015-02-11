@@ -1,7 +1,6 @@
-# COMP3410 Program Template
-# Author: Your Name
-# Assignment: PA[X]
-# Date: Date of submission
+# Author: Tam Duong
+# Assignment: PA1
+# Date: 2/11/15
 
 # Turn in one .asm file per assignment component
 # Remember to submit it as a pull request to the GitHub repo for the assignment
@@ -43,8 +42,8 @@ loop:	 lw   $s3, 0($s0)      # Get value from array fibs[i-2]
 	      bgtz $s1, loop        # repeat while not finished
 
 	      # Now the Fibonacci numbers are computed and stored in array. Print them.
-	      la   $a0, fibs        # first argument for print (array)
-	      add  $a1, $zero, $s5  # second argument for print (size)
+	      la   $t0, fibs        # first argument for print (array)
+	      add  $t1, $zero, $s5  # second argument for print (size)
 	      jal  print            # call print routine (note the 'print' label on line 68)
 
 	      # The program is finished. Exit.
@@ -57,7 +56,8 @@ loop:	 lw   $s3, 0($s0)      # Get value from array fibs[i-2]
 	      .data
 	      
 space:	.asciiz  " "          				# Print a space between each pair of numbers
-head:	 .asciiz  "The Fibonacci numbers are:\n" 	# Print a little helpful intro
+head:	 .asciiz  "The Fibonacci numbers are1:\n" 	# Print a little helpful intro
+ask: 	.asciiz  "Fibonacci numbers to print (up to 9 only):\n"		# Print ask user how many # to print
 
 ###########################################################
 # Another .text segment, for printing
@@ -65,11 +65,17 @@ head:	 .asciiz  "The Fibonacci numbers are:\n" 	# Print a little helpful intro
 
 	      .text
 	      
-print:	add  $t0, $zero, $a0  # starting address of array of data to be printed
-	      add  $t1, $zero, $a1  # initialize loop counter to array size
-	      la   $a0, head        # load address of the print heading string
-	      li   $v0, 4           # specify that you're printing a string
-	      syscall               # print the heading string
+print:	  la	$a0, ask		# load address of ask to $a0
+		li   $v0, 4		# specify that you're printing a string
+		syscall			# print the ask string
+		li    $v0, 5		# specify that you're reading an int
+		syscall			# get user input int
+		add  $a1, $zero, $v0	# store user input to $a1
+		blez $a1, print		# if user input <= 0 then ask again
+		bgt  $a1, $t1, print	# if user input > 9 then ask again
+		la   $a0, head        # load address of the print heading string
+		li   $v0, 4           # specify that you're printing a string
+	      	syscall               # print the heading string
 
 out:	  lw   $a0, 0($t0)      # load the integer to be printed (the current Fib. number)
 	      li   $v0, 1           # specify that you're printing an integer
@@ -80,8 +86,8 @@ out:	  lw   $a0, 0($t0)      # load the integer to be printed (the current Fib. 
 	      syscall               # print the spacer string
 
 	      addi $t0, $t0, 4      # increment address of data to be printed
-	      addi $t1, $t1, -1     # decrement loop counter
-	      bgtz $t1, out         # repeat while not finished
+	      addi $a1, $a1, -1     # decrement loop counter
+	      bgtz $a1, out         # repeat while not finished
 
 	      jr   $ra              # return from subroutine
 	# End of subroutine to print the numbers on one line
