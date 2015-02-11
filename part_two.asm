@@ -42,7 +42,7 @@ la $a0, sumtext	#flavor
 syscall		#printed
 li $v0, 1
 move $a0, $s2		#sum
-syscall			#printed
+syscall		#printed
 li $v0, 4
 la $a0, newline
 syscall

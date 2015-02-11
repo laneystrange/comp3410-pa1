@@ -15,16 +15,16 @@ badin:	.asciiz	"The number must be positive and greater than zero. Please check 
 top:
 li $v0, 4		#we're going to print the prompt
 la $a0, prompt		#this is it
-syscall			#print it
+syscall		#print it
 li $v0, 5		#ready for input
-syscall			#read it
-blez $v0, error		#make sure it's a positive number, else go to the error part
+syscall		#read it
+blez $v0, error	#make sure it's a positive number, else go to the error part
 j continue		#continue on your merry way
 
 error:
 li $v0, 4		#about to print a string
 la $a0, badin		#the error message
-syscall			#print it
+syscall		#print it
 j top			#start from the top
 
 continue: 
@@ -39,9 +39,9 @@ ble $s0, $s7, loop 	#loop until  the counter exceeds the chosen number
 lw $s1, 0($sp)		#load the final sum in prep for printing
 li $v0, 4		#about to print the head
 la $a0, head
-syscall			#printed
+syscall		#printed
 li $v0, 1		#time to print the actual number
 move $a0, $s1
-syscall			#printed
+syscall		#printed
 li $v0, 10
-syscall			#we're done here
+syscall		#we're done here
