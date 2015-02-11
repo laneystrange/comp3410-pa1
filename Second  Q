@@ -1,0 +1,65 @@
+#Name: Dereje Arega
+.data
+head:	 .asciiz  "Name: Dereje Arega \n MIPS Assembly Programs\n Writ a MIPS program that prform three things:\n 1 Prompt the user for two numbers and save them in two different registers.\n 2. Perform 3 calculations (sum, difference, product) using these two numbers, and save each result in data memory.\n 3. For each computed result, retrieve it from memory and print it to the terminal.\nPrint a concluding message and exit \n" 
+
+.word
+
+prompt0:.asciiz "\nEnter the first number\n"
+prompt1:.asciiz "\nEnter the second number\n"
+prompt2:.asciiz "\nSum = N1 + N2\n"
+prompt3:.asciiz "\nDif = N1 - N2 \n"
+prompt4:.asciiz "\nmult = N1*N2\n"
+prompt5:.asciiz "\nDiv = N1/N2\n"
+.text
+li $v0,4
+la $a0,head
+syscall
+li $v0,4
+la $a0,prompt0
+syscall
+li $v0,5
+syscall
+move $s1, $v0 #enter the first umber
+
+li $v0,4
+la $a0,prompt1
+syscall
+li $v0,5
+syscall
+move $s2,$v0  #enter the second number
+
+add $t0,$s1,$s2  #n and the first number and the second number
+sub $t1,$s1,$s2 # Substract the second  number from the first one 
+div $t2, $s1,$s2 # divade the first number by the second
+mul $t3,$s1,$s2 #
+
+li $v0,4
+la $a0,prompt3 # prompt the diference
+syscall
+li $v0,1
+move $a0,$t1
+syscall
+
+li $v0,4
+la $a0,prompt2 # prompt the sum
+syscall
+li $v0,1
+move $a0,$t0
+syscall
+
+li $v0,4
+la $a0,prompt4 # prompt the multiplication
+syscall
+li $v0,1
+move $a0,$t3
+syscall
+
+li $v0,4
+la $a0,prompt5 # prompt the multiplication
+syscall
+li $v0,1
+move $a0,$t2
+syscall
+
+
+
