@@ -95,7 +95,7 @@ out:    add $a0, $zero, $t1 # pass the loop counter to fib
 	print_str
 	
 	addi $t1, $t1, 1 # increment the loop counter
-	blt $t1, $t0, out # repeat while not finished
+	ble $t1, $t0, out # repeat while not finished
 	
 	lw $ra, 0($sp) # restore the $ra
 	addi $sp, $sp, 4 # restore the stack pointer
