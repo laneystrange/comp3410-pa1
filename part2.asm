@@ -1,8 +1,8 @@
 # COMP3410 Program Template
 # Author: Aaron Marshall
-# Assignment: PA[1]
+# Assignment: PA[1] part 2
 # Date: 2/10/14
-
+# takes two inputted number and adds, subs, and mults
 	.data
 input: .asciiz "Input two integers.\n"
 subtext: .asciiz "\nSubtracting......\n"

@@ -1,8 +1,8 @@
 # COMP3410 Program Template
 # Author: Aaron Marshall
-# Assignment: PA[1]
+# Assignment: PA[1] part 3
 # Date: 2/10/14
-
+#adds odd 1-15
 	.text
   
   li $s0, 1 #1

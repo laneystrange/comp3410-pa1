@@ -1,6 +1,6 @@
 # COMP3410 Program Template
 # Author: Aaron Marshall
-# Assignment: PA[1]
+# Assignment: PA[1] part 1
 # Date: 2/10/14
 
 # Turn in one .asm file per assignment component
