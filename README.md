@@ -2,6 +2,11 @@ COMP3410 Spring2015
 Programming Assignment #1
 Assigned: 4 February, 2015
 Deadline: 11 February, 2015
+Part 1: The program simply asks the user to enter a number between 1-9, and after chosing that fib number, we print that
+out to the screen, and the program ends. The program was tested with integers 1 and 5, and these numbers
+were confirmed as fib numbers and printed to screen. 
+
+Part 2: The program simply took 2 inputs and we did mathematical operations. Addition, subtraction, and multiplication.
 
 
 GITHUB SUBMISSION GUIDELINES
