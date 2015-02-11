@@ -18,19 +18,24 @@
 
 fibs:	.word  0 : 9        							  # create an array variable named "fibs" of 9 word-length elements (4 bytes each)
 size:	.word  9            							  # create a single integer variable named "size" that indicates the length of the array
-prmpt:	.asciiz "How many Fibonacci numbers would you like to calculate?: "	  # message to prompt the user for how many numbers they would like to generate. 
+prmpt:	.asciiz "How many Fibonacci numbers would you like to calculate? (1-9): " # message to prompt the user for how many numbers they would like to generate. 
 
 ###############################################
 # .text segment. Assembly instructions go here.
 ###############################################
 	.text
-	
+
+input:	
 	      la   $a0, prmpt	    # load prmpt string into register
 	      li   $v0, 4           # load syscall for print string
               syscall	
 
 	      li   $v0, 5	    # load syscall for read integer
-	      syscall     
+	      syscall
+	      
+	      blt $v0, 0, input	    # ask again if the user input is less than 0
+	      bgt $v0, 9, input     # ask again if the user input is greater than 9
+	      
 	      sw   $v0, size	    # store the user input into size      
 	      
 	      la   $s0, fibs        # load address of array into $s0	      
