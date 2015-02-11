@@ -1,7 +1,7 @@
 # COMP3410 Program Template
 # Author: Ben Murphy
 # Assignment: PA1
-# Date: TBD, but before or on the day it's due
+# Date: Feb 10
 # part_two.asm
 # Input: Integers m and n from keyboard
 # Output: Print to terminal sum, difference, and product of m and n (m - n, not n - m. Order matters!)

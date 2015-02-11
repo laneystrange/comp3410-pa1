@@ -1,8 +1,8 @@
 # COMP3410 Program Template
 # Author: Ben Murphy
 # Assignment: PA1
-# Date: TBD, but before or on the day it's due
-# fibonacci.asm
+# Date: Feb 10
+# part_one_fibonacci.asm
 # Input: Integer N from keyboard
 # Output: Print to terminal N Fibonacci numbers
 

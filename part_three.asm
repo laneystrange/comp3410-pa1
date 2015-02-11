@@ -1,7 +1,7 @@
 # COMP3410 Program Template
 # Author: Ben Murphy
 # Assignment: PA1
-# Date: TBD, but before or on the day it's due
+# Date: Feb 10
 # part_two.asm
 # Input: Integer n from keyboard
 # Output: Print to terminal sum of odd numbers from 1 to n (or the odd number right below n if it's even)
