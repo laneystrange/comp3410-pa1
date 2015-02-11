@@ -7,7 +7,10 @@ out to the screen, and the program ends. The program was tested with integers 1 
 were confirmed as fib numbers and printed to screen. 
 
 Part 2: The program simply took 2 inputs and we did mathematical operations. Addition, subtraction, and multiplication.
+The program was tested by inputing 1 and then 2. Where the addition answer was 3, the subtraction was 1, and the
+multiplication was 2.
 
+Part 3: The task in this part was to I used a technique that had
 
 GITHUB SUBMISSION GUIDELINES
 1. Fork the assignment repository.
