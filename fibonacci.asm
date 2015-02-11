@@ -1,7 +1,7 @@
-# COMP3410 Program Template
-# Author: Your Name
-# Assignment: PA[X]
-# Date: Date of submission
+# COMP 3410
+# Author: Claire Skaggs
+# Assignment: PA1
+# Date: 02/11/15
 
 # Turn in one .asm file per assignment component
 # Remember to submit it as a pull request to the GitHub repo for the assignment
@@ -16,14 +16,24 @@
 
 	.data
 
-fibs:	.word   0 : 9         # create an array variable named "fibs" of 9 word-length elements (4 bytes each)
-size:	.word  9              # create a single integer variable named "size" that indicates the length of the array
+fibs:	.word  0 : 9        							  # create an array variable named "fibs" of 9 word-length elements (4 bytes each)
+size:	.word  9            							  # create a single integer variable named "size" that indicates the length of the array
+prmpt:	.asciiz "How many Fibonacci numbers would you like to calculate?: "	  # message to prompt the user for how many numbers they would like to generate. 
 
 ###############################################
 # .text segment. Assembly instructions go here.
 ###############################################
 	.text
-	      la   $s0, fibs        # load address of array into $s0
+	
+	      la   $a0, prmpt	    # load prmpt string into register
+	      li   $v0, 4           # load syscall for print string
+              syscall	
+
+	      li   $v0, 5	    # load syscall for read integer
+	      syscall     
+	      sw   $v0, size	    # store the user input into size      
+	      
+	      la   $s0, fibs        # load address of array into $s0	      
 	      la   $s5, size        # load address of size variable into $s5
 	      lw   $s5, 0($s5)      # load array size from its address in the register
 
@@ -57,7 +67,7 @@ loop:	 lw   $s3, 0($s0)      # Get value from array fibs[i-2]
 	      .data
 	      
 space:	.asciiz  " "          				# Print a space between each pair of numbers
-head:	 .asciiz  "The Fibonacci numbers are:\n" 	# Print a little helpful intro
+head:	.asciiz  "The Fibonacci numbers are:\n" 	# Print a little helpful intro
 
 ###########################################################
 # Another .text segment, for printing
