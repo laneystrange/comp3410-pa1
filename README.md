@@ -2,6 +2,7 @@ COMP3410 Spring2015
 Programming Assignment #1
 Assigned: 4 February, 2015
 Deadline: 11 February, 2015
+#MY INFO
 Part 1: The program simply asks the user to enter a number between 1-9, and after chosing that fib number, we print that
 out to the screen, and the program ends. The program was tested with integers 1 and 5, and these numbers
 were confirmed as fib numbers and printed to screen. 
@@ -10,8 +11,8 @@ Part 2: The program simply took 2 inputs and we did mathematical operations. Add
 The program was tested by inputing 1 and then 2. Where the addition answer was 3, the subtraction was 1, and the
 multiplication was 2.
 
-Part 3: The task in this part was to I used a technique that had
-
+Part 3: The task in this part was to add all the odd integers up to 15. After running the code, my output is 64, which is correct.
+###########################################################################################################
 GITHUB SUBMISSION GUIDELINES
 1. Fork the assignment repository.
 2. Update your work in your own branch regularly.
