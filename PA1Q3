@@ -1,7 +1,7 @@
 .data
 #Data below is stored in memmory
 fixedV: .word 1
-currentV: .word 1
+currentV: .word 0
 newV:.word 1
 prompt1: .asciiz "\nAnswer\n" 
 .text
@@ -17,11 +17,14 @@ sw $t4, currentV #storing the new value
 lw $t5,newV 
 move $t5,$t4 #simply storing currentValue  in newV to keep track of all values
 sw $t5,newV
-li $t6,15 #always loads 15 to do the bottom check
-beq $t6,$t5,Exit #if this is true, then the program exits, otherwise we move to j loop and continue looping
-j loop
+li $t6,64 #always loads 64 to do the bottom check
+j whilecon
 
-Exit:
+whilecon:
+blt $t5,$t6,loop
+j exit
+
+exit:
 #below we are printing the result to the screen.
 li $v0,4
 la $a0, prompt1
