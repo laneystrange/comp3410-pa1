@@ -13,6 +13,7 @@ prompt:			.asciiz		"Enter a number: "
 sum:			.asciiz		"\nThe sum of the numbers is: "
 dif:			.asciiz		"\nThe difference of the numbers is: "
 product:		.asciiz		"\nThe product of the numbers is: "
+exit:			.asciiz		"\nThanks for playing! Goodbye"
 
 	.text
 	
@@ -68,6 +69,10 @@ product:		.asciiz		"\nThe product of the numbers is: "
 	
 	la $a0, ($s5)		#Prints out the production
 	li $v0, 1
+	syscall
+	
+	la $a0, exit		#Prints the exit string
+	li $v0, 4
 	syscall
 	
 	li $v0, 10		#Ends the program
