@@ -13,8 +13,9 @@
 .data
 fibs: .word 0 : 9 # create an array variable named "fibs" of 9 word-length elements (4 bytes each)
 size: .word 9 # create a single integer variable named "size" that indicates the length of the array
-string: .asciiz "How many Fibonacci numbers do you want to print? ( Enter an integer between 1 and 9 )"
 
+# create a string to ask for user input
+string: .asciiz "How many Fibonacci numbers do you want to print? ( Enter an integer between 1 and 9 )"
 ###############################################
 # .text segment. Assembly instructions go here.
 ###############################################
