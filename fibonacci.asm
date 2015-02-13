@@ -14,15 +14,24 @@
 fibs: .word 0 : 9 # create an array variable named "fibs" of 9 word-length elements (4 bytes each)
 size: .word 9 # create a single integer variable named "size" that indicates the length of the array
 string: .asciiz "How many Fibonacci numbers do you want to print? ( Enter an integer between 1 and 9 )"
+
 ###############################################
 # .text segment. Assembly instructions go here.
 ###############################################
 .text
 
+############# BEGIN MY EDITS ##################
+
 li $v0, 4 # system call for printing string
 la $a0, string # load address of string to print in $a0
 syscall
 
+li $v0, 5 # system call to read an integer input by user
+syscall
+
+sw $v0, size # store the integer from user input into size, which allows
+	     # the rest of the code to not need to be edited
+############# END MY EDITS ####################
 
 la $s0, fibs # load address of array into $s0
 la $s5, size # load address of size variable into $s5
