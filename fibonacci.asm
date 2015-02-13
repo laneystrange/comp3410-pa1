@@ -19,7 +19,9 @@ string: .asciiz "How many Fibonacci numbers do you want to print? ( Enter an int
 ###############################################
 .text
 
-
+li $v0, 4 # system call for printing string
+la $a0, string # load address of string to print in $a0
+syscall
 
 
 la $s0, fibs # load address of array into $s0
