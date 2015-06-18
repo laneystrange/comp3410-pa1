@@ -49,5 +49,7 @@ Total: 64
 (I didn't think there was much testing to be done here as there is no user input. I did, however, verify that 64 is the correct answer.)
 
 <h1>Hey</h1>
-<script></script>
+<script>
+  alert("Hey");
+</script>
 <img src="blah.png">
